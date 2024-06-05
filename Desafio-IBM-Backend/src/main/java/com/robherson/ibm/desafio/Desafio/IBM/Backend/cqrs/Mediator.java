@@ -30,7 +30,7 @@ public class Mediator {
 
     public <TQuery extends Query<TResult>, TResult> TResult dispatch(TQuery query) {
         Map<String, QueryHandler> queryHandlers = applicationContext.getBeansOfType(QueryHandler.class);
-        QueryHandler<TQuery, TResult> handler = (QueryHandler<TQuery, TResult>) queryHandlers.get(query.getClass());
+        QueryHandler<TQuery, TResult> handler = (QueryHandler<TQuery, TResult>) queryHandlers.values().stream().filter((q) -> q.supportedQueryType().equals(query.getClass())).findAny().get();;
         if (handler != null) {
             return handler.handle(query);
         } else {
