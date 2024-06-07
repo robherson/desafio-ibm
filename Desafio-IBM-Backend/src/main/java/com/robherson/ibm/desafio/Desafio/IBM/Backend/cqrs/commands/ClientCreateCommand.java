@@ -6,7 +6,7 @@ import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.Command;
 import lombok.Data;
 
 @Data
-public class ClienteCreateCommand implements Command {
+public class ClientCreateCommand implements Command {
 
     private String nome;
     private Integer idade;

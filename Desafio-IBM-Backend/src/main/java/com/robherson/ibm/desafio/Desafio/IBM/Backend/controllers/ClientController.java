@@ -14,14 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.Mediator;
-import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.commands.ClienteCreateCommand;
-import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetAllClientesQuery;
-import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetClienteByIdQuery;
-import com.robherson.ibm.desafio.Desafio.IBM.Backend.models.Cliente;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.commands.ClientCreateCommand;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetAllClientsQuery;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetClientByIdQuery;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.models.Client;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/clientes")
-public class ClienteController {
+public class ClientController {
 
 
     @Autowired
@@ -30,10 +32,10 @@ public class ClienteController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> obterClientePorId(@PathVariable String id) {
         try {
-            GetClienteByIdQuery query = new GetClienteByIdQuery();
+            GetClientByIdQuery query = new GetClientByIdQuery();
             query.setId(id);
             
-            Cliente cliente = mediator.dispatch(query);
+            Client cliente = mediator.dispatch(query);
             if (cliente != null) {
                 return ResponseEntity.ok(cliente);
             } else {
@@ -47,8 +49,8 @@ public class ClienteController {
     @GetMapping
     public ResponseEntity<Object> obterTodosClientes() {
         try {
-            GetAllClientesQuery query = new GetAllClientesQuery();
-            List<Cliente> clientes = new ArrayList<>();
+            GetAllClientsQuery query = new GetAllClientsQuery();
+            List<Client> clientes = new ArrayList<>();
             clientes = mediator.dispatch(query);
             return ResponseEntity.ok(clientes);
            
@@ -59,7 +61,7 @@ public class ClienteController {
 
     
     @PostMapping
-    public ResponseEntity<Object> createCliente(@RequestBody ClienteCreateCommand cliente) {
+    public ResponseEntity<Object> cadastrarCliente(@RequestBody ClientCreateCommand cliente) {
         try {
             mediator.dispatch(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente cadastrado com sucesso.");
@@ -67,5 +69,12 @@ public class ClienteController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao cadastrar o cliente.");
         }
     }
-   
+
+    // @PutMapping("/{id}")
+    // public  ResponseEntity<Object> atualizarCliente(@RequestBody ClientCreateCommand cliente) {
+    //     //TODO: process PUT request
+        
+    //     return entity;
+    // }
+    
 }
