@@ -1,5 +1,8 @@
 package com.robherson.ibm.desafio.Desafio.IBM.Backend.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.Mediator;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.commands.ClienteCreateCommand;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetAllClientesQuery;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetClienteByIdQuery;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.models.Cliente;
 
@@ -23,8 +27,8 @@ public class ClienteController {
     @Autowired
     private Mediator mediator;
 
-     @GetMapping("/{id}")
-    public ResponseEntity<Object> obterProdutoPorId(@PathVariable String id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> obterClientePorId(@PathVariable String id) {
         try {
             GetClienteByIdQuery query = new GetClienteByIdQuery();
             query.setId(id);
@@ -35,6 +39,19 @@ public class ClienteController {
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
             }
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao buscar o cliente.");
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> obterTodosClientes() {
+        try {
+            GetAllClientesQuery query = new GetAllClientesQuery();
+            List<Cliente> clientes = new ArrayList<>();
+            clientes = mediator.dispatch(query);
+            return ResponseEntity.ok(clientes);
+           
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao buscar o cliente.");
         }
