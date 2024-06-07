@@ -14,10 +14,10 @@ public class Client {
     @Id
     private String id;
 
-    private String nome;
-    private Integer idade;
+    private String name;
+    private Integer age;
     private String email;
-    private long numeroConta;
+    private long accountNumber;
 
     public static final String SEQUENCE_NAME = "clientes_sequence";
     

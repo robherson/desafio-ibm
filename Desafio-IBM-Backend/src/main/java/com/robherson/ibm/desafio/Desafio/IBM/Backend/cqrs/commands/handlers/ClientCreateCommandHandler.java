@@ -24,10 +24,10 @@ public class ClientCreateCommandHandler implements CommandHandler<ClientCreateCo
         
         Client cliente = Client.builder()
             .id(UUID.randomUUID().toString())
-            .nome(command.getNome())
+            .name(command.getNome())
             .email(command.getEmail())
-            .idade(command.getIdade())
-            .numeroConta(sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME))
+            .age(command.getIdade())
+            .accountNumber(sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME))
             .build();
 
         clienteRepository.save(cliente);
