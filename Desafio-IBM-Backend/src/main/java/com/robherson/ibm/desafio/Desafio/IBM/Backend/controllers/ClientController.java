@@ -15,14 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.Mediator;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.commands.ClientCreateCommand;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.commands.ClientUpdateCommand;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetAllClientsQuery;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetClientByIdQuery;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.exceptions.ClientNotFoundException;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.models.Client;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
-@RequestMapping("/api/clientes")
+@RequestMapping("/api/clients")
 public class ClientController {
 
 
@@ -30,14 +32,14 @@ public class ClientController {
     private Mediator mediator;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> obterClientePorId(@PathVariable String id) {
+    public ResponseEntity<Object> getClientById(@PathVariable String id) {
         try {
             GetClientByIdQuery query = new GetClientByIdQuery();
             query.setId(id);
             
-            Client cliente = mediator.dispatch(query);
-            if (cliente != null) {
-                return ResponseEntity.ok(cliente);
+            Client client = mediator.dispatch(query);
+            if (client != null) {
+                return ResponseEntity.ok(client);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
             }
@@ -47,12 +49,12 @@ public class ClientController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> obterTodosClientes() {
+    public ResponseEntity<Object> findAllClients() {
         try {
             GetAllClientsQuery query = new GetAllClientsQuery();
-            List<Client> clientes = new ArrayList<>();
-            clientes = mediator.dispatch(query);
-            return ResponseEntity.ok(clientes);
+            List<Client> clients = new ArrayList<>();
+            clients = mediator.dispatch(query);
+            return ResponseEntity.ok(clients);
            
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao buscar o cliente.");
@@ -61,20 +63,29 @@ public class ClientController {
 
     
     @PostMapping
-    public ResponseEntity<Object> cadastrarCliente(@RequestBody ClientCreateCommand cliente) {
+    public ResponseEntity<Object> createClient(@RequestBody ClientCreateCommand client) {
         try {
-            mediator.dispatch(cliente);
+            mediator.dispatch(client);
             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente cadastrado com sucesso.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao cadastrar o cliente.");
         }
     }
 
-    // @PutMapping("/{id}")
-    // public  ResponseEntity<Object> atualizarCliente(@RequestBody ClientCreateCommand cliente) {
-    //     //TODO: process PUT request
+    @PutMapping
+    public  ResponseEntity<Object> updateClient(@RequestBody ClientUpdateCommand client) {
         
-    //     return entity;
-    // }
+        try {
+            mediator.dispatch(client);
+            return ResponseEntity.status(HttpStatus.OK).body("Cliente atualizado com sucesso.");
+        } catch (Exception e) {
+
+            if (e.getClass() ==  ClientNotFoundException.class) 
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado na base.");
+            
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao atualizar o cliente.");
+
+        }
+    }
     
 }
