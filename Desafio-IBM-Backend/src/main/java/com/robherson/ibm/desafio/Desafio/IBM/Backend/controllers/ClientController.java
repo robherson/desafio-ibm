@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.Mediator;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.commands.ClientCreateCommand;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.commands.ClientDeleteCommand;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.commands.ClientUpdateCommand;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetAllClientsQuery;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetClientByIdQuery;
@@ -80,12 +82,30 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.OK).body("Cliente atualizado com sucesso.");
         } catch (Exception e) {
 
-            if (e.getClass() ==  ClientNotFoundException.class) 
+            if (e.getClass() == ClientNotFoundException.class) 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado na base.");
             
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao atualizar o cliente.");
 
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteClient(@PathVariable String id){
+
+        try {
+            ClientDeleteCommand command = new ClientDeleteCommand();
+            command.setId(id);            
+            mediator.dispatch(command);
+            return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado com sucesso.");
+        } catch (Exception e) {
+            if (e.getClass() == ClientNotFoundException.class) 
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado na base.");
+            
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao deletar o cliente.");
+        }
+        
+
     }
     
 }
