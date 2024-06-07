@@ -40,12 +40,12 @@ public class ClientController {
             query.setId(id);
             
             Client client = mediator.dispatch(query);
-            if (client != null) {
-                return ResponseEntity.ok(client);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
-            }
+            return ResponseEntity.ok(client);
+            
         } catch (Exception ex) {
+            if (ex.getClass().equals(ClientNotFoundException.class))  
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao buscar o cliente.");
         }
     }
