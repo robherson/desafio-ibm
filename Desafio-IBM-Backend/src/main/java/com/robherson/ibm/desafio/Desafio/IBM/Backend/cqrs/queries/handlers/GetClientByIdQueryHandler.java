@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.GetClientByIdQuery;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.cqrs.queries.QueryHandler;
+import com.robherson.ibm.desafio.Desafio.IBM.Backend.exceptions.ClientNotFoundException;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.models.Client;
 import com.robherson.ibm.desafio.Desafio.IBM.Backend.repositories.ClientRepository;
 
@@ -13,12 +14,12 @@ import com.robherson.ibm.desafio.Desafio.IBM.Backend.repositories.ClientReposito
 public class GetClientByIdQueryHandler implements QueryHandler<GetClientByIdQuery, Client> {
 
     @Autowired
-    private ClientRepository clienteRepository;
+    private ClientRepository clientRepository;
     
     @Override
     public Client handle(GetClientByIdQuery query)  {
-        return clienteRepository.findById(query.getId())
-            .orElseThrow();
+        return clientRepository.findById(query.getId())
+            .orElseThrow(() -> new ClientNotFoundException("Cliente com o ID " + query.getId() + " não encontrado!"));
     }
 
     @Override

@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 public class ClientCreateCommand implements Command {
 
-    private String nome;
-    private Integer idade;
+    private String name;
+    private Integer age;
     private String email;
-    private Integer numeroConta;
+    private Integer accountNumber;
     
 }

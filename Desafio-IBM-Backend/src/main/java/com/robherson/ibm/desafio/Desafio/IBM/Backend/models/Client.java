@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Builder
-@Document(collection = "clientes")
+@Document(collection = "clients")
 public class Client {
 
     @Id
@@ -19,6 +19,6 @@ public class Client {
     private String email;
     private long accountNumber;
 
-    public static final String SEQUENCE_NAME = "clientes_sequence";
+    public static final String SEQUENCE_NAME = "clients_sequence";
     
 }

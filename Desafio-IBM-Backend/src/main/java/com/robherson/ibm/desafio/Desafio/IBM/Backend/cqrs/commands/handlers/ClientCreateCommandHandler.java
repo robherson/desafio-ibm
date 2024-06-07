@@ -15,22 +15,22 @@ import com.robherson.ibm.desafio.Desafio.IBM.Backend.services.SequenceGeneratorS
 public class ClientCreateCommandHandler implements CommandHandler<ClientCreateCommand> {
     
     @Autowired
-    private ClientRepository clienteRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;
 
     public void handle(ClientCreateCommand command) {
         
-        Client cliente = Client.builder()
+        Client client = Client.builder()
             .id(UUID.randomUUID().toString())
-            .name(command.getNome())
+            .name(command.getName())
             .email(command.getEmail())
-            .age(command.getIdade())
+            .age(command.getAge())
             .accountNumber(sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME))
             .build();
 
-        clienteRepository.save(cliente);
+            clientRepository.save(client);
     }
     
     @Override

@@ -14,11 +14,11 @@ import com.robherson.ibm.desafio.Desafio.IBM.Backend.repositories.ClientReposito
 public class GetAllClientsQueryHandler implements QueryHandler<GetAllClientsQuery, List<Client>> {
 
     @Autowired
-    private ClientRepository clienteRepository;
+    private ClientRepository clientRepository;
 
     @Override
     public List<Client> handle(GetAllClientsQuery query) {
-        return clienteRepository.findAll();
+        return clientRepository.findAll();
     }
 
     @Override
