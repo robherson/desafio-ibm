@@ -28,6 +28,7 @@ public class ClientCreateCommandHandler implements CommandHandler<ClientCreateCo
             .email(command.getEmail())
             .age(command.getAge())
             .accountNumber(sequenceGeneratorService.generateSequence(Client.SEQUENCE_NAME))
+            .balance(0.0)
             .build();
 
             clientRepository.save(client);

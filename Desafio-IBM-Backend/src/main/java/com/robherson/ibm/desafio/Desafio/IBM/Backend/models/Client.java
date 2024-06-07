@@ -18,6 +18,7 @@ public class Client {
     private Integer age;
     private String email;
     private long accountNumber;
+    private Double balance;
 
     public static final String SEQUENCE_NAME = "clients_sequence";
     
