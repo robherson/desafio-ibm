@@ -46,9 +46,9 @@ public class ClientController {
             
         } catch (Exception ex) {
             if (ex.getClass().equals(ClientNotFoundException.class))  
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"Cliente não encontrado.\"}");
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao buscar o cliente.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Ocorreu ao buscar o cliente.\"}");
         }
     }
 
@@ -61,7 +61,7 @@ public class ClientController {
             return ResponseEntity.ok(clients);
            
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao buscar o cliente.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Ocorreu ao buscar o cliente.\"}");
         }
     }
 
@@ -70,9 +70,9 @@ public class ClientController {
     public ResponseEntity<Object> createClient(@RequestBody ClientCreateCommand client) {
         try {
             mediator.dispatch(client);
-            return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\": \"Cliente cadastrado com sucesso\"}");
+            return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\": \"Cliente cadastrado com sucesso.\"}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao cadastrar o cliente.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Ocorreu um erro ao cadastrar o cliente.\"}");
         }
     }
 
@@ -81,13 +81,13 @@ public class ClientController {
         
         try {
             mediator.dispatch(client);
-            return ResponseEntity.status(HttpStatus.OK).body("Cliente atualizado com sucesso.");
+            return ResponseEntity.status(HttpStatus.OK).body("{\"message\":Cliente atualizado com sucesso.\"}");
         } catch (Exception e) {
 
             if (e.getClass() == ClientNotFoundException.class) 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado na base.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":Cliente não encontrado na base.\"}");
             
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao atualizar o cliente.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Ocorreu um erro ao atualizar o cliente.\"}");
 
         }
     }
@@ -99,12 +99,12 @@ public class ClientController {
             ClientDeleteCommand command = new ClientDeleteCommand();
             command.setId(id);            
             mediator.dispatch(command);
-            return ResponseEntity.status(HttpStatus.OK).body("Cliente deletado com sucesso.");
+            return ResponseEntity.status(HttpStatus.OK).body("{\"message\":Cliente deletado com sucesso.\"}");
         } catch (Exception e) {
             if (e.getClass() == ClientNotFoundException.class) 
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado na base.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\":Cliente não encontrado na base.\"}");
             
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao deletar o cliente.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\":Ocorreu um erro ao deletar o cliente.\"}");
         }
         
 
