@@ -27,3 +27,6 @@
     width: 95%;
     height: auto;
 }
+.mat-mdc-row:hover {
+    background-color: #FF0000;
+  }
