@@ -1,0 +1,40 @@
+<div class="details">
+  <div class="container">
+      <div class="menu">
+        <div class="title">{{client?.name}} - Saldo: {{formatCoin(client?.balance)}}</div>
+        <div class="crud-buttons">
+          <button>Saque</button>
+          <button>Deposito</button>
+        </div>
+      </div>
+      <div class="extract-table" *ngIf="operations.length">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matRowHover>
+
+          <ng-container>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let i = index">{{i+1}}</td>
+          </ng-container>
+          <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Data </th>
+              <td mat-cell *matCellDef="let element"> {{formatDate(element.date)}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="operationType">
+              <th mat-header-cell *matHeaderCellDef> Operação </th>
+              <td mat-cell *matCellDef="let element"> {{getOperatioText(element.operationType)}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="value">
+              <th mat-header-cell *matHeaderCellDef> Valor </th>
+              <td mat-cell *matCellDef="let element"> {{formatCoin(element.value)}} </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>         
+      </div>
+      <div class="extract-table" *ngIf="!operations.length">
+          <p>Cliete ainda não realizou operações!</p>
+      </div>
+    </div>
+</div>

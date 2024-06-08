@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddClientModalComponent } from './add-client-modal/add-client-modal.component';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { AddClientModalComponent } from './add-client-modal/add-client-modal.com
     MatFormFieldModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: []
 })
 export class AppModule { }
