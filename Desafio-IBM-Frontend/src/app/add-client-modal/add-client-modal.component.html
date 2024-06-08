@@ -1,0 +1,22 @@
+<div class="modal">
+    <div class="title">
+        <h2>Adicionar Cliente</h2>
+    </div>
+    <div class="create-form">
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>Nome:</mat-label>
+            <input matInput placeholder="Nome" formControlName="name">
+          </mat-form-field>
+          <mat-form-field appearance="outline" >
+            <mat-label>Idade:</mat-label>
+            <input matInput placeholder="Idade" formControlName="age">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email:</mat-label>
+            <input matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+          <button [disabled]="isDisabled()" mat-raised-button type="submit">Cadastrar Cliente</button>
+        </form>
+    </div>
+</div>

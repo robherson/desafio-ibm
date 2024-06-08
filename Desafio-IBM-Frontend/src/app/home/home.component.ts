@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../models/client.model';
 import { ClientService } from '../services/client.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { AddClientModalComponent } from '../add-client-modal/add-client-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -16,12 +18,23 @@ export class HomeComponent implements OnInit {
   dataSource: MatTableDataSource<Client> = new MatTableDataSource<Client>;
 
   
-  constructor(private clientService: ClientService) { }
+  constructor(
+    private clientService: ClientService,
+    private dialog: MatDialog
+  ) { }
   
   ngOnInit(): void {
+    this.getAllClients();
+  }
+
+  getAllClients(){
     this.clientService.getClients().subscribe(clients => {
       this.dataSource = new MatTableDataSource(clients);
     });
+  }
+
+  createCliente(){
+      this.dialog.open(AddClientModalComponent);
   }
   
 

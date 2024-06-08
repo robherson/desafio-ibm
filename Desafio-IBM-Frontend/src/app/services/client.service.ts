@@ -20,15 +20,15 @@ export class ClientService {
     return this.http.get<Client>(`${this.apiUrl}/${id}`);
   }
 
-  addClient(client: Client): Observable<void> {
-    return this.http.post<void>(this.apiUrl, client);
+  addClient(client: Client): Observable<string> {
+    return this.http.post<string>(this.apiUrl, client);
   }
 
-  updateClient(client: Client): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}`, client);
+  updateClient(client: Client): Observable<string> {
+    return this.http.put<string>(`${this.apiUrl}`, client);
   }
 
-  deleteClient(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteClient(id: number): Observable<string> {
+    return this.http.delete<string>(`${this.apiUrl}/${id}`);
   }
 }
