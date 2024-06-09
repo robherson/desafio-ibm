@@ -1,0 +1,11 @@
+<div class="modal">
+    <div class="title">
+        <p>Deseja deletar o cliente:</p>
+        <h5>{{data?.client?.name}}</h5>
+    </div>
+    <div class="actions">
+        <button mat-raised-button (click)="onConfirm()" >Confirmar</button>
+        <button id="action-button" mat-button (click)="onCancel()">Cancelar</button>
+    </div>
+       
+</div>

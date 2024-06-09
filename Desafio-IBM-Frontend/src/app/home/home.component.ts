@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddClientModalComponent } from '../add-client-modal/add-client-modal.component';
 import { Router } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
+import { ConfirmDeleteComponent } from '../confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-home',
@@ -36,13 +37,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  createCliente(){
+  createClient(){
       this.dialog.open(AddClientModalComponent, {
         data: { operation: 'create' } 
       });
   }
 
-  uptadeCliente(client: Client){
+  uptadeClient(client: Client){
     this.dialog.open(AddClientModalComponent, {
       data: { operation: 'update',
         client: client
@@ -50,6 +51,16 @@ export class HomeComponent implements OnInit {
     }).afterClosed().subscribe(() => {
       this.getAllClients();
     });
+}
+
+deleteClient(client: Client){
+  this.dialog.open(ConfirmDeleteComponent, {
+    data: {
+      client: client
+     } 
+  }).afterClosed().subscribe(() => {
+    this.getAllClients();
+  });
 }
 
   goToDetails(id: string): void {
