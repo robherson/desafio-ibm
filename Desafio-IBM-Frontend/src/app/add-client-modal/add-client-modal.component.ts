@@ -52,7 +52,7 @@ export class AddClientModalComponent implements OnInit {
   onSubmit(): void {
     if (this.clientForm.valid) {
       const clientData: Client = this.clientForm.value;
-      if (this.getTitle() === 'create'){
+      if (this.data.operation == 'create'){
         this.clientService.addClient(clientData).subscribe( () => {
           this.dialogRef.close();
         });

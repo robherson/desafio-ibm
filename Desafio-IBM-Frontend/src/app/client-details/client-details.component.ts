@@ -7,6 +7,8 @@ import { OperationService } from '../services/operation.service';
 import { Operation } from '../models/operation.model';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { OperationType } from '../models/operation-type.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ProcessOperationModalComponent } from '../process-operation-modal/process-operation-modal.component';
 
 @Component({
   selector: 'app-client-details',
@@ -31,7 +33,8 @@ export class ClientDetailsComponent implements OnInit {
     private opeartionService: OperationService,
     private cb: ChangeDetectorRef,
     private datePipe: DatePipe,
-    private currencyPipe: CurrencyPipe
+    private currencyPipe: CurrencyPipe,
+    private dialog: MatDialog,
   ) { }
 
 
@@ -41,13 +44,19 @@ export class ClientDetailsComponent implements OnInit {
     });
     this.clientService.getClientById(this.id).subscribe(client => {
       this.client = client;
-      this.opeartionService.getOperations(client.id).subscribe(operations => {
+      this.getOperations();
+    })
+    
+  }
+
+  getOperations():void{
+    if(this.client != null){
+      this.opeartionService.getOperations(this.client.id).subscribe(operations => {
         this.operations = operations;
         this.dataSource = new MatTableDataSource(operations);
         this.cb.detectChanges();
       })
-    })
-    
+    }
   }
 
   formatDate(date: string): string | null {
@@ -62,4 +71,19 @@ export class ClientDetailsComponent implements OnInit {
   formatCoin(valor: number | undefined):string | null{
     return this.currencyPipe.transform(valor, 'BRL', 'symbol', '1.2-2');
   }
+
+  addOperation(operationType: string){
+    const operation = operationType === 'DEPOSIT' ? OperationType.DEPOSIT : OperationType.WITHDRAWAL; 
+    this.dialog.open(ProcessOperationModalComponent, {
+      data: {
+        operationType: operation,
+        client: this.client
+       } 
+    }).afterClosed().subscribe(() => {
+      this.getOperations();
+    });
+  }
+
+  
+
 }

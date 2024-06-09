@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Operation } from '../models/operation.model';
+import { Operation, OperationDto } from '../models/operation.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class OperationService {
     return this.http.get<Operation[]>(`${this.apiUrl}/extract/${clientId}`);
   }
 
-  addOperation(operation: Operation): Observable<string> {
+  addOperation(operation: OperationDto): Observable<string> {
     return this.http.post<string>(this.apiUrl, operation);
   }
 

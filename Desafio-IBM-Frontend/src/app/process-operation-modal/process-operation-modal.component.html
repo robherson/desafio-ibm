@@ -1,0 +1,23 @@
+<div class="modal">
+    <div class="title">
+        <h2>{{getTitle()}}</h2>
+    </div>
+    <div class="create-form">
+        <div *ngIf="isWithdrawal()">
+          <h5>Saldo: {{data.client.balance}}</h5>
+        </div>
+        <form [formGroup]="operationForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>Valor:</mat-label>
+            <input matInput placeholder="Valor" formControlName="value">
+            <mat-error *ngIf="operationForm.get('value')?.hasError('required')">Campo obrigatório</mat-error>
+            <mat-error *ngIf="operationForm.get('value')?.hasError('min')">Valor deve ser maior que 0</mat-error>
+            <mat-error *ngIf="operationForm.get('value')?.hasError('max')">Valor deve ser menor que saldo</mat-error>
+          </mat-form-field>          
+          <div class="actions">
+            <button id="action-button" mat-button [disabled]="isDisabled()"type="submit">{{getTitle()}}</button>
+            <button id="action-button" mat-button (click)="onCancel()">Cancelar</button>
+          </div>
+        </form>
+    </div>
+</div>

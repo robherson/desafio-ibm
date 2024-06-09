@@ -7,3 +7,9 @@ export interface Operation {
     value: number;
     client: Client;
 }
+
+export interface OperationDto {
+    operationType: OperationType;
+    value: number;
+    clientId: string;
+}
