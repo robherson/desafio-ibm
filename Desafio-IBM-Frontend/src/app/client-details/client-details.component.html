@@ -3,8 +3,9 @@
       <div class="menu">
         <div class="title">{{client?.name}} | Saldo: {{formatCoin(client?.balance)}}</div>
         <div class="crud-buttons">
-          <button (click)="addOperation('WITHDRAWAL')">Saque</button>
+          <button [disabled]="disableWithdrawal()" (click)="addOperation('WITHDRAWAL')">Saque</button>
           <button (click)="addOperation('DEPOSIT')">Deposito</button>
+          <button (click)="goToHome()">Voltar</button>
         </div>
       </div>
       <div class="extract-table" *ngIf="operations.length">

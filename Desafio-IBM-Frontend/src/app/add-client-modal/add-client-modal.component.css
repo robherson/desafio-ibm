@@ -26,6 +26,3 @@ form{
     margin-left: 10px;
 }
 
-button:disabled {
-    background: #ccc;
-  }

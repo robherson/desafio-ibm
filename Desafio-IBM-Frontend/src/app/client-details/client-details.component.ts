@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Client } from '../models/client.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../services/client.service';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { OperationService } from '../services/operation.service';
@@ -35,6 +35,7 @@ export class ClientDetailsComponent implements OnInit {
     private datePipe: DatePipe,
     private currencyPipe: CurrencyPipe,
     private dialog: MatDialog,
+    private router: Router
   ) { }
 
 
@@ -84,6 +85,14 @@ export class ClientDetailsComponent implements OnInit {
     });
   }
 
+  disableWithdrawal(): boolean{
+    if(this.client) return this.client?.balance <= 0 ;
+    return false;
+  }
+
+  goToHome(){
+    this.router.navigate(['/']);
+  }
   
 
 }

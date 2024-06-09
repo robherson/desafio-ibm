@@ -29,7 +29,3 @@ form{
 .actions{
     margin-top: 15px;
 }
-
-button:disabled {
-    background: #ccc;
-  }
