@@ -16,7 +16,10 @@
             <mat-label>Email:</mat-label>
             <input matInput placeholder="Email" formControlName="email">
           </mat-form-field>
-          <button [disabled]="isDisabled()" mat-raised-button type="submit">{{getTitle()}}</button>
+          <div class="actions">
+            <button [disabled]="isDisabled()" mat-raised-button type="submit">{{getTitle()}}</button>
+            <button id="action-button" mat-button (click)="onCancel()">Cancelar</button>
+          </div>
         </form>
     </div>
 </div>

@@ -12,12 +12,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 10px;
 }
 
 form{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-left: 10px;
+}
+
+#action-button{
+    margin-left: 10px;
 }
 
 button:disabled {

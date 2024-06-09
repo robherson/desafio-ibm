@@ -71,6 +71,10 @@ export class AddClientModalComponent implements OnInit {
     return this.data.operation == 'create' ? 'Cadastrar Cliente' : 'Atualizar Cliente'
   }
 
+  onCancel(): void {
+    this.dialogRef.close(false);
+  }
+
 
 
 }
