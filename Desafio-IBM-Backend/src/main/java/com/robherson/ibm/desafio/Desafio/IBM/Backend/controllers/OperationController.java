@@ -40,9 +40,9 @@ public class OperationController {
             return ResponseEntity.ok(operations);           
         } catch (Exception e) {
             if (e.getClass().equals(ClientNotFoundException.class)) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"Cliente não encontrado.\"}");
             }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao buscar as operações.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Ocorreu um erro ao buscar as operações.\"}");
         }
     }
 
@@ -50,16 +50,16 @@ public class OperationController {
     public ResponseEntity<Object> createOperation(@RequestBody OperationCreateCommand command) {
         try {
             mediator.dispatch(command);
-            return ResponseEntity.ok("Operação realizada com sucesso");
+            return ResponseEntity.ok("{\"message\": \"Operação realizada com sucesso.\"}");
         } catch (Exception e) {
             if (e.getClass().equals(ClientNotFoundException.class)) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"message\": \"Cliente não encontrado.\"}");
             }
             if (e.getClass().equals(InsufficientFundsException.class)) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Saldo insuficiente.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"message\": \"Saldo insuficiente.\"}");
             }
 
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao buscar o cliente."); 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Ocorreu um erro ao buscar o cliente.\"}"); 
         }
     }
     
