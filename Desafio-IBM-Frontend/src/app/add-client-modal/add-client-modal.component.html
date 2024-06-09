@@ -1,6 +1,6 @@
 <div class="modal">
     <div class="title">
-        <h2>Adicionar Cliente</h2>
+        <h2>{{getTitle()}}</h2>
     </div>
     <div class="create-form">
         <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
@@ -16,7 +16,7 @@
             <mat-label>Email:</mat-label>
             <input matInput placeholder="Email" formControlName="email">
           </mat-form-field>
-          <button [disabled]="isDisabled()" mat-raised-button type="submit">Cadastrar Cliente</button>
+          <button [disabled]="isDisabled()" mat-raised-button type="submit">{{getTitle()}}</button>
         </form>
     </div>
 </div>

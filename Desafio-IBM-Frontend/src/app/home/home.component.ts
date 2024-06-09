@@ -5,17 +5,18 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddClientModalComponent } from '../add-client-modal/add-client-modal.component';
 import { Router } from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatIconModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'age', 'email', 'accountNumber'];
+  displayedColumns: string[] = ['id', 'name', 'age', 'email', 'accountNumber', 'actions'];
   dataSource: MatTableDataSource<Client> = new MatTableDataSource<Client>;
 
   
@@ -36,8 +37,20 @@ export class HomeComponent implements OnInit {
   }
 
   createCliente(){
-      this.dialog.open(AddClientModalComponent);
+      this.dialog.open(AddClientModalComponent, {
+        data: { operation: 'create' } 
+      });
   }
+
+  uptadeCliente(client: Client){
+    this.dialog.open(AddClientModalComponent, {
+      data: { operation: 'update',
+        client: client
+       } 
+    }).afterClosed().subscribe(() => {
+      this.getAllClients();
+    });
+}
 
   goToDetails(id: string): void {
     this.router.navigate(['/clients', id]);
