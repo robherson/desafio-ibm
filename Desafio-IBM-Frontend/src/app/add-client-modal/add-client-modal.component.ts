@@ -5,11 +5,12 @@ import { Client } from '../models/client.model';
 import { ClientService } from '../services/client.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-client-modal',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatInputModule, ReactiveFormsModule, CommonModule],
   templateUrl: './add-client-modal.component.html',
   styleUrl: './add-client-modal.component.css'
 })

@@ -7,14 +7,18 @@
           <mat-form-field appearance="outline">
             <mat-label>Nome:</mat-label>
             <input matInput placeholder="Nome" formControlName="name">
+            <mat-error *ngIf="clientForm.get('name')?.hasError('required')">Campo obrigatório</mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" >
             <mat-label>Idade:</mat-label>
             <input matInput placeholder="Idade" formControlName="age">
+            <mat-error *ngIf="clientForm.get('age')?.hasError('required')">Campo obrigatório</mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Email:</mat-label>
             <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="clientForm.get('email')?.hasError('required')">Campo obrigatório</mat-error>
+            <mat-error *ngIf="clientForm.get('email')?.hasError('email')">Email inválido</mat-error>
           </mat-form-field>
           <div class="actions">
             <button [disabled]="isDisabled()" mat-raised-button type="submit">{{getTitle()}}</button>
